@@ -1,13 +1,19 @@
-import h from "./create-element.js";
 import dogs from "./dogs.js";
 
-const dogElements = dogs.map((dog) => {
-  const h2 = h("h2", {}, dog.name);
-  const img = h("img", { src: dog.image, alt: "", width: 500, height: 300 });
-  return h("li", { className: "card" }, h2, img);
-});
+const dogElements = dogs
+  .map(
+    (dog) => `
+    <li class="card">
+      <h2>${dog.name}</h2>
+      <img src="${dog.image}" alt="" />
+    </li>
+  `
+  )
+  .join("\n");
 
-const title = h("h1", {}, "All the dogs");
-const list = h("ul", {}, ...dogElements);
-
-document.querySelector("#app").append(title, list);
+document.querySelector("#app").innerHTML = `
+  <h1>All the dogs</h1>
+  <ul>
+    ${dogElements}
+  </ul>
+`;
