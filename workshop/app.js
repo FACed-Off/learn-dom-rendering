@@ -1,19 +1,16 @@
 import dogs from "./dogs.js";
 
-const dogElements = dogs
-  .map(
-    (dog) => `
-    <li class="card">
-      <h2>${dog.name}</h2>
-      <img src="${dog.image}" alt="" />
-    </li>
-  `
-  )
-  .join("\n");
+const cardTemplate = document.querySelector("#cardTemplate");
 
-document.querySelector("#app").innerHTML = `
-  <h1>All the dogs</h1>
-  <ul>
-    ${dogElements}
-  </ul>
-`;
+const dogElements = dogs.map((dog) => {
+  const clone = cardTemplate.content.cloneNode(true);
+  clone.querySelector("h2").append(dog.name);
+  clone.querySelector("img").src = dog.image;
+  return clone;
+});
+
+const pageTemplate = document.querySelector("#pageTemplate");
+const clone = pageTemplate.content.cloneNode(true);
+clone.querySelector("ul").append(...dogElements);
+
+document.querySelector("#app").append(clone);
